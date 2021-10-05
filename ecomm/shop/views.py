@@ -19,8 +19,7 @@ import smtplib, ssl
 
 HOST_PORT=587
 HOST_SERVER="smtp.gmail.com"
-EMAIL_SENDER="pawankushwah850@gmail.com"
-EMAIL_SENDER_PASSOWRD="P@wan7869"
+
 
 ######################################################################
 
