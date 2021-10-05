@@ -1,0 +1,74 @@
+{%extends "basic.html" %}
+{%if user.is_authenticated%}
+{%block title%} profile| {{user.username}} {%endblock%}
+{%else%}
+<h1>Please go back to login or signup</h1>
+<a href="{%url 'login'%}">Login Now</a>
+{%endif%}
+
+{%block body%}
+<div class="container #fafafa grey lighten-5 z-depth-3">
+    <br>
+    <div class="row">
+        <div class="col s12 m5">
+            <div class="row">
+                <div class="col s12">
+                    <h5 class="center-align" style="font-family: 'Courier New', Courier, monospace;">Profile</h5>
+                    <div class="divider"></div>
+                    <br>
+                </div>
+                <div class="col s12">
+                     {% if user.userdetails.ProfilePicture %}
+                    <img src="/media/{{user.userdetails.ProfilePicture.url|default:'#'}}" alt="" class="circle responsive-img" width="200">
+                    {%else%}
+                    <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size:250px"></i>
+                    {%endif%}
+                </div>
+                <div class="col s12">
+                    <ul class="collection" style="font-family: 'Courier New', Courier, monospace;">
+                        <li class="collection-item center-align" style="font-weight: 700; color: rgb(28, 180, 180);">{{user.username}}</li>
+                        <li class="collection-item"><span style="font-weight: 700;">Name :- </span> {{user.first_name | capfirst}} {{user.last_name |capfirst}}</li>
+                        <li class="collection-item"><span style="font-weight: 700;">Email :- </span> {{user.email|default:"Please Enter Email"}}</li>
+                        <li class="collection-item"><span style="font-weight: 700;">Pincode :- </span>{{user.userdetails.pinCode|default:"Please Enter Area Pincode"}} </li>
+                        <li class="collection-item"><span style="font-weight: 700;">Mobile :- </span>{{user.userdetails.mobile|default:"Please Enter Number"}}</li>
+                        <li class="collection-item"><span style="font-weight: 700;">Alternate Mobile :- </span>{{user.userdetails.alternateMobile|default:"Please Enter Number"}} </li>
+                        <li class="collection-item"><span style="font-weight: 700;">Address :- </span>{{user.userdetails.address | capfirst}}</li>
+                        <li class="collection-item"><span style="font-weight: 700;">Office Address :- </span>{{user.userdetails.officeAddress|default:"Any office Address ?"}} </li>
+                        <li class="collection-item"><span style="font-weight: 700;">Registerd Date :- </span>{{user.userdetails.registrationDate|date:"D d M Y"}} </li>
+                    </ul>
+                </div>
+                <div class="col s12 #004d40 teal darken-4">
+                    <a href="{% url 'updateprofile' user.username%}"  style="font-family: 'Courier New', Courier, monospace; font-size: larger; color:#eeff41">Edit profile <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m7">
+           <div class="row">
+            <div class="col s12">
+                <h5 class="center-align" style="font-family: 'Courier New', Courier, monospace;">Purchased History</h5>
+                <div class="divider"></div>
+                <br>
+            </div>
+            <div class="col s12">
+                <p>
+                    {%if data%}
+                    {%for i in data%}
+                    <ul class="collection" style="font-family: 'Courier New', Courier, monospace;">
+                        {%for i1 in i%}
+
+                        <li class="collection-item" style="font-weight:700">{{i1}}</li>
+
+                        {%endfor%}
+                    </ul>
+                    {%endfor%}
+                    {%endif%}
+                </p>
+            </div>
+           </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

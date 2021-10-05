@@ -1,0 +1,136 @@
+{%extends 'basic.html' %}
+
+{%block title %}cart | my shopee{%endblock%}
+{%block body%}
+<div class="container #e0f2f1 teal lighten-5">
+  {%if user.is_authenticated%}
+  <div class="row">
+    <div class="col s12">
+      <section>
+          <h4 class="center-align " style="font-family: 'Courier New', Courier, monospace; padding: 5px; letter-spacing: 2px; ">Shopping Cart</h4>
+      </section>
+      <div class="divider"></div>
+      <table class="">
+        <thead>
+          <tr style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: larger;">
+              <th>Item Id</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+              <th>Item Quantity</th>
+              <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+      </tbody>
+    </table>
+  </div>
+  <div class="col s12">
+    <div class="section" id="ProccedBtn">
+      <a href="{%url 'shipping' user.username %}"  class="btn btn-large #004d40 teal darken-4">Procced To Buy</a>
+    </div>
+  </div>
+  </div>
+    
+  {%csrf_token%}
+  {%endif%}
+</div>
+
+{%endblock%}
+
+{%block javascript%}
+<script>
+
+//printcart data in table body
+
+  localStorage.getItem('mycart')
+    if ( localStorage.getItem('mycart')!=null && Object.keys(JSON.parse(localStorage.getItem('mycart'))).length!=0 ){
+      console.log('entery');
+          document.getElementById('ProccedBtn').hidden=false;
+      var cartData=JSON.parse(localStorage.getItem('mycart'));
+
+        for(var k in cartData){
+          let tr=document.createElement('tr');
+          
+          let id=document.createTextNode(k);
+          let productName=document.createTextNode(cartData[k]['productName']);
+          let productPrice=document.createTextNode('₹ '+cartData[k]['productPrice']+'.00');
+          let productCount=document.createTextNode(cartData[k]['productCount']);
+          
+
+          let td=document.createElement('td');
+              td.appendChild(id);
+              tr.appendChild(td)
+
+              td=document.createElement('td');
+              td.appendChild(productName);
+              tr.appendChild(td);
+
+              td=document.createElement('td');
+              td.appendChild(productPrice);
+              tr.appendChild(td);
+
+              td=document.createElement('td');
+              td.appendChild(productCount);
+              tr.appendChild(td);
+
+              td=document.createElement('td');
+          let button=document.createElement('button');
+              button.appendChild(document.createTextNode('Remove Item'));
+              button.classList.add('btn');
+              button.classList.add('red');
+              button.setAttribute('id',k);
+              //button.setAttribute('data-id',k);
+              button.setAttribute('onclick',"deletItem(this)");
+              td.appendChild(button);
+              tr.appendChild(td);
+
+            document.getElementById('tbody').appendChild(tr);
+        }
+    }
+    else{
+      document.getElementById('tbody').innerHTML="<h4 class='center-align' style='color:#ff5252'>No Items in your Cart</h4>";
+      document.getElementById('ProccedBtn').hidden=true;
+    }
+    
+
+    function deletItem(e){
+      e.parentElement.parentElement.remove();
+      let data=JSON.parse(localStorage.getItem('mycart'));
+          delete data[e.id];
+          localStorage.setItem('mycart',JSON.stringify(data));
+        
+      if (Object.keys(data).length==0){
+        document.getElementById('tbody').innerHTML="<h4 class='center-align' style='color:#ff5252'>No Items in your Cart</h4>";
+        document.getElementById('ProccedBtn').hidden=true;
+      } 
+    }
+   
+/*
+  //using promises and fetch api to send request to server
+  const csrf_token=document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  const request=new Request(
+    'http://127.0.0.1:8000/cart/',
+    {headers:{'X-CSRFToken': csrf_token,
+            'Content-Type': 'application/json',}});
+
+  function json(response){
+    return response.json();
+  }
+
+  fetch(request,{
+    method:'POST',
+    mode:'same-origin',  // Do not send CSRF token to another domain.
+    body: JSON.stringify(localStorage.getItem('mycart'))
+
+  }).then(json)
+  .then(function(data){
+    
+      console.log(data);
+    
+  }).catch(function(error){
+    console.log(error);
+  });
+*/
+</script>
+{%endblock%}

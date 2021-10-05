@@ -1,0 +1,145 @@
+{%extends "basic.html" %}
+{% block title %} checkout {%endblock%}
+
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m7 #fafafa grey lighten-5">
+            <div class="row">
+                <div class="col s12">
+                    <h3>
+                        Shipping Details
+                    </h3>
+                    <div class="divider"></div>
+                </div>
+                {% for k,v in data.items %}
+                {% ifnotequal k "product" %}{% ifnotequal k "id" %}{% ifnotequal k "userID_id" %}
+                {% ifnotequal k "orderId_id" %}
+                <div class="col s12 ">
+                    <div class="section" style="font-family: 'Courier New', Courier, monospace;">
+                        {% ifequal k "purchasedDate" %} {{k|capfirst}} : {{v|date:"M d, Y"}}
+                        {%else%}
+                        {{k|capfirst}} : {{v|capfirst}}
+                        {% endifequal %}
+                    </div>
+                </div>
+
+                {%endifnotequal%}{%endifnotequal%}{%endifnotequal%}{%endifnotequal%}
+                {%endfor%}
+            </div>
+        </div>
+        <div class="col s12 m5 #f5f5f5 grey lighten-4">
+            <h3>Products</h3>
+            <div class="divider"></div>
+            <table>
+                <thead>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Product Price</th>
+                    <th>Product Count</th>
+                </thead>
+                <tbody>
+
+                    {%for k ,v in product.items%}
+                    <tr>
+                        <td>{{k}}</td>
+                        {%for nk ,nv in v.items%}
+                        <td>{{nv}}</td>
+                        {%endfor%}
+                    </tr>
+                    {%endfor%}
+                    <tr>
+                        {%load static%}
+                        <img src="{%static 'images/paymentLogo.png'%}" alt="payment accept" width="400" height="90">
+                    </tr>
+                    <tr>
+                        <td>Total Amount</td>
+                        <td></td>
+                        <td>{{request.session.total_price}}</td>
+                        <td><td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="section">
+                <button id="rzp-button1" class="btn btn-large">Pay</button>
+            </div>
+        </div>
+    </div>
+</div>
+{%csrf_token%}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+{%endblock%}
+{%block javascript%}
+<script>
+const csrf_token=document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+var options = {
+    "key": "rzp_test_N9RYbJpvhn8z8Q", // Enter the Key ID generated from the Dashboard
+    "amount": "{{request.session.total_price}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "My Shopee",
+    "description": "Test Transaction",
+    "image": "",
+    "order_id": "{{request.session.orderId}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+
+        const payment={
+            'razorpay_payment_id':response.razorpay_payment_id,
+            'razorpay_order_id':response.razorpay_order_id,
+            'razorpay_signature':response.razorpay_signature,
+        };
+
+        console.log(response.razorpay_payment_id);
+        console.log(response.razorpay_order_id);
+        console.log(response.razorpay_signature)
+
+    
+        fetch('/paymentSuccess/', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'X-CSRFToken': csrf_token,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payment),
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data=="PaymentSuccess"){
+                window.location.href="/success/"
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+
+    },
+    "prefill": {
+        "name": "{{data.name}}",
+        "email": "{{data.email}}",
+        "contact": "{{data.mobile}}"
+    },
+    "notes": {
+        "address": "{{data.address}}"
+    },
+    "theme": {
+        "color": "33f9ff"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+</script>
+{%endblock%}

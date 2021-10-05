@@ -1,0 +1,121 @@
+{%extends "basic.html" %}
+
+
+
+{%block title%}Shipping Form | {{user.username}}{%endblock%}
+
+{%block body%}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 l6">
+            <div class="card #fafafa grey lighten-5 ">
+                <div class="card-content white-text">
+                  <span class="card-title black-text">Billing Address</span>
+                    <form action="" method="post">
+                        {%csrf_token%}
+                        {{form.as_p}}
+                        <input type="hidden" name="product" id="id_product">
+                        <button type="submit" class="btn btn-large #00695c teal darken-3 pulse">proceed to checkout</button>
+                    </form>
+                </div>
+              </div>
+        </div>
+        <div class="col s12 l6 #f5f5f5 grey lighten-4">
+            <div class="section">
+                <h5 class="" style="font-weight: 300;">Product Price</h5>
+            </div>
+            <div class="section">
+                <table style="font-weight: 300; ">
+                    <thead>
+                        <tr>
+                            <th>S.NO</th>
+                            <th>Items Name</th>
+                            <th>Item Quantity</th>
+                            <th>Item Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                      
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{%endif%}
+{%endblock%}
+
+{%block javascript%}
+<script>
+    if (Object.keys(JSON.parse(localStorage.getItem('mycart'))).length ==0 || localStorage.getItem('mycart')==null  ){
+        window.location="/";
+    }
+    document.querySelector('#id_city').classList.add('browser-default');
+    document.querySelector('#id_country').classList.add('browser-default');
+    document.querySelector('textarea').classList.add("materialize-textarea");
+    document.querySelector('#id_product').value=localStorage.getItem('mycart');
+
+    var data=JSON.parse(localStorage.getItem('mycart'));
+
+        let i=1;
+        for(var k in data){
+
+            let tr=document.createElement('tr');
+            let td=document.createElement('td');
+            let datac=document.createTextNode(i);
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            td=document.createElement('td');
+            datac=document.createTextNode(data[k]['productName']);
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            td=document.createElement('td');
+            datac=document.createTextNode(data[k]['productCount']);
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            td=document.createElement('td');
+            datac=document.createTextNode(data[k]['productPrice']+'.00');
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            document.getElementById('tbody').appendChild(tr);
+            i++;
+        } 
+            var tr=document.createElement('tr');
+            let td=document.createElement('td');
+            let datac=document.createTextNode('Total Price');
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            td=document.createElement('td');
+            datac=document.createTextNode('');
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            var total_price=0;
+            for(let k in data){
+                total_price+=parseFloat(data[k]['productPrice'])*parseFloat(data[k]['productCount']);
+            }
+
+            td=document.createElement('td');
+            datac=document.createTextNode('');
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            td=document.createElement('td');
+            datac=document.createTextNode(total_price+'.00');
+            td.appendChild(datac);
+            tr.appendChild(td);
+
+            document.getElementById('tbody').appendChild(tr);
+        
+
+
+</script>
+{%endblock%}

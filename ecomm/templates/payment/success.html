@@ -1,0 +1,26 @@
+{%extends "basic.html"%}
+{%block title %} Payment Success {%endblock%}
+
+{%block body%}
+<div class="container">
+    <div class="sections" style="font-family: 'Courier New', Courier, monospace;">
+        <h2 class="center-align" style="color: teal;">Payment Successfull</h2>
+      {%if request.session.success %}
+        {% for k,v in request.session.success.items %} 
+            {% ifnotequal k "razorpay_signature" %} 
+            <p class="center-align">{{k}} : {{v}}</p>
+            {%endifnotequal%}
+        {% endfor %}
+        <h6 class="center-align " style="color: red">Please check your Email</h6>
+      {%endif%}
+    </div>
+    <div class="sections">
+        <div class="center-align">
+            <a href="{%url 'index' %}">Go to Home</a>
+        </div>
+       
+    </div>
+</div>
+
+
+{%endblock%}

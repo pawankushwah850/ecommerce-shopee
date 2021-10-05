@@ -1,0 +1,115 @@
+{% extends "basic.html"%}
+{%block title%} index {%endblock%}
+
+{%block body%}
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="carousel carousel-slider">
+        <a class="carousel-item" href="#one!"><img src="https://cdn.pixabay.com/photo/2017/11/29/13/28/a-discount-2986181_960_720.jpg" height="400"
+            width="800"></a>
+        <a class="carousel-item" href="#two!"><img src="https://cdn.pixabay.com/photo/2015/01/21/13/21/sale-606687_960_720.png" height="400"
+            width="800"></a>
+        <a class="carousel-item" href="#three!"><img src="https://cdn.pixabay.com/photo/2015/01/21/13/21/special-offer-606691_960_720.png" height="400"
+            width="800"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="section #004d40 teal darken-4 center-align">
+        <h2 style="color: #a7ffeb; font-weight: 700; font-family: 'Courier New', Courier, monospace;">Shop By Category</h2>
+      </div>
+      <div class="divider"></div>
+    </div>
+    <div class="col s1 l4">
+      <a href="/category/Mobiles/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://i.pinimg.com/736x/02/10/a1/0210a1944d00b785faecd7505773f74f.jpg" width="300" height="250" >
+            <span class="card-title " style="color:#004d40; font-weight:600; font-family: monospace" >Mobiles</span>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col s1 l4">
+
+      <a href="/category/Laptops/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4afYZ" width="300" height="250" >
+            <span class="card-title " style="color:#004d40; font-weight:600; font-family: monospace" >Laptops</span>
+          </div>
+
+        </div>
+      </a>
+
+    </div>
+    <div class="col s1 l4">
+
+      <a href="/category/Books/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://img2.exportersindia.com/product_images/bc-full/2020/2/3185555/bill-book-printing-services-1581160204-5290695.jpeg" width="300" height="250" >
+            <span class="card-title " style="color:#004d40; font-weight:600; font-family: monospace" >Books</span>
+          </div>
+
+        </div>
+      </a>
+
+    </div>
+    <div class="col s1 l4">
+
+      <a href="/category/Accessories/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://i.pinimg.com/564x/f7/cc/c0/f7ccc04e10440a621abf80e6634f220a.jpg" width="300" height="250" >
+            <span class="card-title " style="color:#004d40; font-weight:600; font-family: monospace" >Accessories</span>
+          </div>
+
+        </div>
+      </a>
+
+    </div>
+    <div class="col s1 l4">
+      <a href="/category/Led/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://i.pinimg.com/originals/aa/21/d2/aa21d2482c55efe5b6b07202ab09af19.jpg" width="300" height="250" >
+            <span class="card-title " style="color:#004d40; font-weight:600; font-family: monospace" >LED Tele-vision</span>
+          </div>
+
+        </div>
+      </a>
+
+    </div>
+    <div class="col s1 l4">
+
+      <a href="/category/Toys/">
+        <div class="card">
+          <div class="card-image">
+            <img src="https://www.thespruce.com/thmb/Ke1EAQvW5o-Cn9jvMEKigKNISAc=/900x0/filters:no_upscale():max_bytes(150000):strip_icc()/VTechRingLearnCashRegister-59c4092922fa3a00119202ec.jpeg" width="300" height="250" >
+            <span class="card-title" style="color:#004d40; font-weight:600; font-family: monospace" >Toys</span>
+          </div>
+
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+{%endblock%}
+
+{%block javascript %}
+<script>
+  //crousal 
+  document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems, { duration: 200, indicators: true });
+
+  });
+</script>
+{%endblock%}

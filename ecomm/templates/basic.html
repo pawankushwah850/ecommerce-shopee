@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <title>{%block title%}index{%endblock%}</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  {% block css %}
+
+  {% endblock %}
+
+
+</head>
+
+<body>
+  <nav
+    style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    <div class="nav-wrapper #004d40 teal darken-4">
+      <a href="/" class="brand-logo"
+        style="color:yellow; font-weight: 700; letter-spacing: 1px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">MyShopee</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fa fa-bars" style="font-size: 22px;"
+          aria-hidden="true"></i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li style="font-weight: 600; font-size:14px"><a href="{% url 'cart' %}">Cart <i class="fa fa-shopping-cart"
+              style="font-size: 22px;" aria-hidden="true"></i>
+          </a></li>
+        {% if user.is_authenticated %}
+        <li style="font-weight: 600; font-size:14px"><a href="{% url 'profile' user.username %}">Welcome !
+            {{user.username}} <i class="fa fa-user-circle-o" style="font-size: 22px;" aria-hidden="true"></i>
+          </a></li>
+        <li style="font-weight: 600; font-size:14px"><a href="{%url 'logout'%}">Logout <i class="fa fa-sign-out"
+              style="font-size: 22px; " aria-hidden="true"></i>
+          </a></li>
+        {%else%}
+        <li style="font-weight: 600; font-size:14px"><a href="{% url 'login' %}">Login</a></li>
+        {%endif%}
+      </ul>
+    </div>
+  </nav>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="#">cart</a></li>
+    <li><a href="#">track</a></li>
+    <li>
+      <div class="divider"></div>
+    </li>
+    <li><a href="#">profile</a></li>
+  </ul>
+  <br>
+
+  {%block body%}
+
+
+
+  {%endblock%}
+
+  <!--FOOTER-->
+  <br>
+  <div class="row #004d40 teal darken-4">
+    <div class="col s12 #80cbc4 teal lighten-3">
+      <div style="float:right" id="footer-icons">
+        <h5
+          style="color:#004d40;font-weight:600; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+          Sharing! <i class="fa fa-instagram" aria-hidden="true" style="padding-right:20px"></i><i
+            class="fa fa-facebook-square" style="padding-right:20px" aria-hidden="true"></i><i class="fa fa-whatsapp"
+            style="padding-right: 20px;" aria-hidden="true"></i><i class="fa fa-twitter" aria-hidden="true"
+            style="padding-right:20px;"></i></h5>
+      </div>
+
+    </div>
+    <div class="col s12">
+      <div class="container">
+        <p class="offset-5 text-center">
+        <blockquote
+          style="font-size:24px; color:yellow; font-weight: 700; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+          “We see our customers as invited guests to a party, and we are the hosts. It’s our job every day to make
+          every important aspect of the customer experience a little bit better.”
+        </blockquote>
+
+        </p>
+        <div class="divider">
+        </div>
+
+      </div>
+    </div>
+    <div class="col s12 " style="padding:15px">
+      <div class="container">
+        <div class="col s12 l4">
+          <ul style="font-size: large; color:#a7ffeb; font-family: 'Courier New', Courier, monospace;">
+            <li style="font-weight: 700; padding:1px">Privacy</li>
+            <li style="font-weight: 700; padding:1px">Term & Conditions</li>
+            <li style="font-weight: 700; padding:1px">Policy</li>
+            <li style="font-weight: 700; padding:1px">Aggrement</li>
+          </ul>
+        </div>
+        <div class="col s12 l4">
+          <ul style="font-size: large; color:#a7ffeb; font-family: 'Courier New', Courier, monospace;">
+            <li style="font-weight: 700; padding:1px"><a href="{%url 'trackorder' %}" style="font-size: large; color:#a7ffeb; font-family: 'Courier New', Courier, monospace;">Track Order</a></li>
+            <li style="font-weight: 700; padding:1px">Cart</li>
+            <li style="font-weight: 700; padding:1px">Account</li>
+          </ul>
+        </div>
+        <div class="col s12 l4">
+          <ul style="font-size: large; color:#a7ffeb; font-family: 'Courier New', Courier, monospace;">
+            <li style="font-weight: 700; padding:1px"> </li>
+            <li style="font-weight: 700; padding:1px"><span>67, New harshiddhi nagar, 452010</span></li>
+            <li><br></li>
+            <li style="font-weight: 700; padding:1px"> <i class="fa fa-envelope" style="font-size: 22px;"
+                aria-hidden="true"></i>
+              pawankushwah850@gmail.com</li>
+            <li style="font-weight: 700; padding:1px"> <i class="fa fa-volume-control-phone" style="font-size: 22px;"
+                aria-hidden="true"></i>
+              +91-6263376302</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+
+    //side nav
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+
+
+  </script>
+  {%block javascript%}
+
+  {%endblock%}
+
+</body>
+
+</html>

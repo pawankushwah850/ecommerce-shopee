@@ -1,0 +1,40 @@
+{%extends "basic.html"%}
+{%block title %} track order {%endblock%}
+
+{%block body%}
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h5 style="font-family: 'Courier New', Courier, monospace; padding: 10px; color:white" class="center-align #004d40 teal darken-4">No more wait for your order, Track order Now.</h5>
+        </div>
+        <div class="col s12">
+           <div class="section">
+                <form action="" method="get">
+                    <label for="Search order">Search order status</label>
+                    <input type="search" name="search" id="search">
+                </form>
+           </div>
+        </div>
+        <div class="col s12">
+            <h6 style="font-family: 'Courier New', Courier, monospace;">Please write your orderId & Press <kbd>Enter</kbd> </h6>
+        </div>
+        <div class="col s12">
+            <p class="#e0f2f1 teal lighten-5" style="padding: 10px; font-family: 'Courier New', Courier, monospace; letter-spacing: 1px;" >
+                <br>
+                    {%if dataFound%}
+                    {%for k,v in dataFound.items %}
+                        {{k|capfirst}} : {{v|capfirst}}<br>
+                    {%endfor%}
+                    {%endif%}
+                <br>
+            </p>
+            <p>
+                {% if NodataFound %}
+                    <h6 class="center-align" style="font-family: 'Courier New', Courier, monospace;">{{NodataFound}}</h6>
+                {%endif%}
+            </p>
+        </div>
+    </div>
+</div>
+{%endblock%}
